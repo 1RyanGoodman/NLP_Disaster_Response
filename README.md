@@ -1,5 +1,9 @@
 # Disaster Response Pipeline Project
 
+This project used NLP to classify twitter messages after a disaster to facilitate the messages reaching the relevant agency based on concern.
+
+There were 36 relevant concerns, such as weather, food, and earthquake.
+
 ### Instructions:
 1. Run the following commands in the project's root directory to set up your database and model.
 

@@ -27,7 +27,7 @@ import sys
 
 
 def load_data(database_filepath):
-    # load data from database
+    """load data from database"""
     conn = sqlite3.connect(database_filepath)
     sqlquery = "SELECT * FROM catmessages"
     df = pd.read_sql(sqlquery, con=conn)
@@ -38,6 +38,7 @@ def load_data(database_filepath):
 
 
 def tokenize(text):
+    """tokenize text: remove stopwords, lowercase, and lemmatize"""
     stop_words = stopwords.words("english")
     lemmatizer = WordNetLemmatizer()
     text = re.sub(r"[^a-zA-Z0-9]", " ", text.lower())
@@ -61,13 +62,14 @@ def build_model():
 
 
 def evaluate_model(model, X_test, Y_test, category_names):
+    """evaluate model"""
     cr = classification_report(Y_test, model.predict(X_test), target_names = category_names)
     print(cr)
     pass
 
 
 def save_model(model, model_filepath):
-    #filename = 'disaster_model_1.sav'
+    """save model data"""
     pickle.dump(model, open(model_filepath, 'wb'))
     pass
 
