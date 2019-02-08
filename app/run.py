@@ -40,8 +40,11 @@ def index():
     
     # extract data needed for visuals
     # TODO: Below is an example - modify to extract data for your own visuals
-    genre_counts = df.groupby('genre').count()['message']
-    genre_names = list(genre_counts.index)
+    
+    top_concern_counts = df.drop(['id','message','original','genre'],axis = 1).sum().sort_values(ascending = False).head(11)[1:]
+    top_concern_names = list(top_concern_counts.index)
+    bot_concern_counts = df.drop(['id','message','original','genre'],axis = 1).sum().sort_values(ascending = True).head(10)
+    bot_concern_names = list(bot_concern_counts.index)    
     
     # create visuals
     # TODO: Below is an example - modify to create your own visuals
@@ -49,21 +52,43 @@ def index():
         {
             'data': [
                 Bar(
-                    x=genre_names,
-                    y=genre_counts
+                    #x=genre_names,
+                    #y=genre_counts
+                    x=top_concern_names,
+                    y=top_concern_counts                    
                 )
             ],
 
             'layout': {
-                'title': 'Distribution of Message Genres',
+                'title': 'Top Ten Message Concerns',
                 'yaxis': {
                     'title': "Count"
                 },
                 'xaxis': {
-                    'title': "Genre"
+                    'title': "Concern"
                 }
             }
-        }
+        },
+        {
+            'data': [
+                Bar(
+                    #x=genre_names,
+                    #y=genre_counts
+                    x=bot_concern_names,
+                    y=bot_concern_counts                    
+                )
+            ],
+
+            'layout': {
+                'title': 'Lowest Ten (Relative) Message Concerns',
+                'yaxis': {
+                    'title': "Count"
+                },
+                'xaxis': {
+                    'title': "Concern"
+                }
+            }
+        }        
     ]
     
     # encode plotly graphs in JSON
